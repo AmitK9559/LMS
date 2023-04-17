@@ -1,0 +1,120 @@
+﻿@model Library.Models.Student
+
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                <h5 class="my-3">@Model.FirstName @Model.LastName</h5>
+                @switch (Model.LibraryTime)
+                {
+                    case 1:
+                        <p class="text-muted mb-1" asp-for="FirstName">Shift: Morning</p>
+                        break;
+                    case 2:
+                        <p class="text-muted mb-1" asp-for="FirstName">Shift: Afternoon</p>
+                        break;
+                    case 3:
+                        <p class="text-muted mb-1" asp-for="FirstName">Shift: Evening</p>
+                        break;
+                    case 4:
+                        <p class="text-muted mb-1" asp-for="FirstName">Shift: Night</p>
+                        break;
+                    default:
+                        <p class="text-muted mb-1" asp-for="FirstName">Shift: @Model.LibraryTime</p>
+                        break;
+
+                }
+
+                @switch (Model.LibraryTime)
+                {
+                    case 1:
+                        <p class="text-muted mb-1" asp-for="FirstName">Time: 09:00 am - 12:00 pm</p>
+                        break;
+                    case 2:
+                        <p class="text-muted mb-1" asp-for="FirstName">Time: 12:00 pm - 03:00 pm</p>
+                        break;
+                    case 3:
+                        <p class="text-muted mb-1" asp-for="FirstName">Time: 03:00 pm - 06:00 pm</p>
+                        break;
+                    case 4:
+                        <p class="text-muted mb-1" asp-for="FirstName">Time: 06:00 pm - 09:00 pm</p>
+                        break;
+                    default:
+                        <p class="text-muted mb-1" asp-for="FirstName">Time: 09:00 am - 09:00 pm</p>
+                        break;
+
+                }
+
+                <p class="text-muted mb-3">@Model.MobileNo</p>
+                @* <div class="d-flex justify-content-center mb-2">
+                <button type="button" class="btn btn-primary">Follow</button>
+                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Full Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.FirstName @Model.LastName</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Father Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.FatherName</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.EmailID</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Mobile</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.MobileNo | @Model.AlterNateMobileNo</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Address</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.Address</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Join date</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">@Model.CreatedOn.ToString("dddd"), @Model.CreatedOn.ToString("dd/MM/yyyy hh:mm tt").Replace("-","/")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

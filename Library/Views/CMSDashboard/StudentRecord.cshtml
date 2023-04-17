@@ -1,0 +1,164 @@
+﻿@model IEnumerable<Library.Models.Student>
+
+@{
+    ViewData["Title"] = "StudentRecord";
+}
+<style>
+    input {
+        text-align: left;
+    }
+
+    ::-webkit-input-placeholder {
+        text-align: left;
+    }
+
+    :-moz-placeholder {
+        text-align: left;
+    }
+</style>
+<p>
+    <a asp-action="_AddStudent" asp-controller="CMSDashboard" class="btn btn-primary">Add New Student</a>
+    <a class="btn btn-danger" asp-area="" asp-controller="CMSDashboard" asp-action="Dashboard" style="float:right">Back to Dashboard</a>
+</p>
+
+<div class="row">
+    <div class="table-responsive table-bordered table-hover">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Full Name
+                    </th>
+                    <th>
+                        Father Name
+                    </th>
+                    <th>
+                        Mo No
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FatherName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MobileNo)  @Html.DisplayFor(modelItem => item.AlterNateMobileNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "_AddStudent", new { id=item.StudentId },new { @class = "btn btn-success" })
+
+                            <button class="btn btn-primary" onclick="showStudentDetailsModal(@item.StudentId )">Details</button>
+                            @if (item.IsActive == true)
+                                @Html.ActionLink("In Active", "Delete", new { id=item.StudentId  },new { @class = "btn btn-danger" })
+                            else
+                                @Html.ActionLink("Active", "Delete", new { id=item.StudentId  },new { @class = "btn btn-success" })
+
+
+
+
+
+
+
+                            </td>
+                        </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        Full Name
+                    </th>
+                    <th>
+                        Father Name
+                    </th>
+                    <th>
+                        Mo No
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<div class="modal " tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="color: #fff;">
+                <h5 class="modal-title " style="text-align:center;width:100%;">
+                    Student Profile
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    @*$('.table').DataTable();*@
+        function showStudentDetailsModal(ID) {
+            $.ajax({
+                type: "GET",
+                url: "/CMSDashboard/Details",
+                data: { ID: ID },
+                success: function (partialView) {
+    @* $("#user-details-modal .modal-content").html();
+                        $(".modal").modal("show");*@
+                        $(".modal-body").html(partialView)
+                    $(".modal").modal("show");
+                }
+            });
+        }
+    $(document).ready(function () {
+        // Setup - add a text input to each footer cell
+        $('.table tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="' + title + '" />');
+        });
+
+        // DataTable
+        var table = $('.table').DataTable({
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+            },
+        });
+    });
+</script>

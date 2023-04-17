@@ -1,0 +1,248 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+@model List<Student>
+<style>
+    .clock-body {
+        width: 300px;
+        height: 300px;
+        border-width: 10px;
+        position: relative;
+        background-color: #fff;
+        border-image: url(https://www.pixeden.com/media/k2/galleries/220/001-wood-melamine-subttle-pattern-background-pat.jpg) 30 stretch;
+        border-style: solid;
+        box-shadow: 3px 6px 16px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 3px 6px 16px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .inner-clock {
+        box-shadow: inset 3px 6px 16px 0px rgba(0, 0, 0, 0.5);
+        height: 100%;
+        width: 100%;
+    }
+
+    .second-bar {
+        position: absolute;
+        top: 20%;
+        right: 49%;
+        height: 100px;
+        margin-left: -135px;
+        background-color: #000;
+        width: 5px;
+        transform-origin: bottom center;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .minute-bar {
+        position: absolute;
+        top: 54%;
+        right: 50%;
+        width: 100px;
+        margin-left: -135px;
+        background-color: #000;
+        height: 8px;
+        transform-origin: right center;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .hour-bar {
+        position: absolute;
+        top: 54%;
+        right: 50%;
+        width: 80px;
+        margin-left: -135px;
+        background-color: #000;
+        height: 10px;
+        transform-origin: right center;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.5);
+    }
+
+        .hour-bar:after {
+            position: absolute;
+            content: "";
+            border-width: 25px;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+            border-top-width: 55px;
+            top: -50px;
+            left: -98px;
+            transform: rotate(450deg);
+            transform-origin: right bottom;
+        }
+
+    .minute-bar:after {
+        position: absolute;
+        content: "";
+        border-width: 25px;
+        border-style: solid;
+        border-color: #000 transparent transparent transparent;
+        border-top-width: 55px;
+        top: -50px;
+        left: -98px;
+        transform: rotate(450deg);
+        transform-origin: right bottom;
+    }
+
+    .twelve {
+        height: 65px;
+        width: 65px;
+        background-image: url(digit.png);
+        background-position: 0;
+        position: absolute;
+        font-size: 65px;
+        top: 0;
+        right: 45%;
+        font-family: inherit;
+        text-shadow: 4px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .three {
+        position: absolute;
+        font-size: 65px;
+        top: 50%;
+        right: 10px;
+        margin-top: -37.5px;
+        font-family: inherit;
+        text-shadow: 4px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .six {
+        position: absolute;
+        font-size: 65px;
+        bottom: 0;
+        right: 46%;
+        font-family: inherit;
+        text-shadow: 4px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .nine {
+        position: absolute;
+        font-size: 65px;
+        top: 50%;
+        left: 10px;
+        margin-top: -37.5px;
+        font-family: inherit;
+        text-shadow: 4px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 43%;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background-color: #000;
+        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.5);
+    }
+
+        .center:after {
+            content: "";
+            position: absolute;
+            bottom: -90px;
+            left: -60px;
+            display: inline-block;
+            font-size: 45px;
+        }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <a asp-action="StudentRecord" asp-controller="CMSDashboard">
+                <div class="" style="width: 300px;    height: 300px;">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Students</h6>
+                            <h1 class="display-4 text-center">@Model.Count</h1>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="main">
+                <div class="clock-body">
+                    <div class="inner-clock">
+                        <div class="second-bar"></div>
+                        <div class="minute-bar"></div>
+                        <div class="hour-bar"></div>
+                        <div class="twelve">12</div>
+                        <div class="three">3</div>
+                        <div class="six">6</div>
+                        <div class="nine">9</div>
+                        <div class="center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        function movingclock() {
+
+
+            // Get Current Time in Second
+            var s = new Date();
+            var sec = s.getSeconds();
+            // 1 second is equal 6 degress.
+            var secf = sec * 6;
+            // Adding angle to Second bar with css
+            $(".second-bar").css({ 'transform': 'rotate(' + secf + 'deg)' });
+
+
+
+            // Get Current Time in Minute
+            var m = new Date();
+            var min = m.getMinutes();
+
+            // 1 minute is equal 6 degress and 90 plus because initially it was at 9 in clock as per our CSS.
+            var minangle = min * 6 + 90;
+
+            // making it ready as "rotate(00deg)"
+            var minanglef = minangle + 'deg';
+            var minanglef = 'rotate(' + minanglef + ')';
+            // Adding angle to minute bar with css
+            $('.minute-bar').css({ 'transform': minanglef });
+
+            // Get Current Time in Hour
+            var h = new Date();
+            var hour = h.getHours();
+
+            // Converting Hour in 12 hours format
+            if (hour => 12) {
+                hour = hour - 12;
+            }
+            else {
+                hour = hour;
+            }
+
+            // 1 hour is equal 30 degress and 90 plus because initially it was at 9 as per our CSS.
+            var hourangle = hour * 30 + 90;
+            // Including Minute deg in hour bar
+            var hourwithmin = min / 2;
+            var hourangle = hourangle + hourwithmin;
+            // making it ready as "rotate(00deg)"
+            var hourangle = hourangle + 'deg';
+            var hourangle = 'rotate(' + hourangle + ')';
+            // Adding angle to hour bar with css
+            $('.hour-bar').css({ 'transform': hourangle });
+
+
+
+        }
+        // looping the same function every sec
+        var Timer = setInterval(function () {
+            movingclock()
+        }, 1000);
+    });
+
+</script>
+

@@ -1,0 +1,92 @@
+﻿@model Library.Models.Student
+
+@{
+    ViewData["Title"] = "_AddStudent";
+}
+
+
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header bg-primary text-white">Student Registration Form</div>
+        <div class="card-body">
+            <form asp-action="_AddStudent" method="post">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="FirstName">First Name</label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter First Name" />
+                        @Html.ValidationMessageFor(model =>model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" class="form-control" placeholder="Enter Last Name" />
+                        @Html.ValidationMessageFor(model =>model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="FatherName">Father's Name</label>
+                        <input asp-for="FatherName" class="form-control" placeholder="Enter Father's Name" />
+                        @Html.ValidationMessageFor(model =>model.FatherName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="MobileNo">Mobile Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+91</span>
+                            </div>
+                            <input asp-for="MobileNo" class="form-control" placeholder="Enter Mobile Number" />
+                            @Html.ValidationMessageFor(model =>model.MobileNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="AlterNateMobileNo">Alternate Mobile Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+91</span>
+                            </div>
+                            <input asp-for="AlterNateMobileNo" class="form-control" placeholder="Enter Alternate Mobile Number" />
+                            @Html.ValidationMessageFor(model =>model.AlterNateMobileNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="EmailID">Email ID</label>
+                        <input asp-for="EmailID" class="form-control" placeholder="Enter Email ID" />
+                        @Html.ValidationMessageFor(model =>model.EmailID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="LibraryTime">Library Time</label>
+                        <select asp-for="LibraryTime" class="form-control">
+                            <option value="">-- Select Library Time --</option>
+                            <option value="1">Morning</option>
+                            <option value="2">Afternoon</option>
+                            <option value="3">Evening</option>
+                            <option value="4">Night</option>
+                        </select>
+                        @Html.ValidationMessageFor(model =>model.LibraryTime, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Address">Address</label>
+                        <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter Address"></textarea>
+                        @Html.ValidationMessageFor(model =>model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <input asp-for="StudentId" type="hidden" class="form-control" placeholder="Enter Email ID" />
+                <button type="submit" class="btn btn-primary">
+                    @if (Model.StudentId > 0)
+                    {
+                        <span>Update</span>
+                    }
+                    else
+                    {
+                        <span>Submit</span>
+                    }
+                </button>
+                <a class="btn btn-danger" asp-area="" asp-controller="CMSDashboard" asp-action="StudentRecord">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>
+
